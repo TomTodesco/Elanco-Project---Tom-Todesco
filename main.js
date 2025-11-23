@@ -30,7 +30,7 @@ async function geocodecity(location) {
         if (data && data.length > 0) {
             return {
                 lat: parseFloat(data[0].lat),
-                lan: parseFloat(data[0].lon) // Note: Nominatim uses "lon" not "lan"
+                lan: parseFloat(data[0].lon) 
             };
         } else {
             return null;
@@ -42,44 +42,22 @@ async function geocodecity(location) {
 }
 
 function mostcommon(list){  //  this checks the most common element in a list
-    alert("running mostcommon");
     let count = {};
     let check = {};
-
-    for(let i = 0; i< list.length;i++){
-        if(list[i] in check){
-            alert("found in check:"+list[i]);
-            let index = check.indexof(list[i]);
-            alert("index is:"+ index);
-            alert("current count is:"+ count[index]);
-            count[index] += 1;
-            alert("new count is:"+ count[index]);
-        }
-        else{
-            count[i] = 1;
-            check[i] = list[i];
-            alert("added to check:"+list[i]);
-        }
-        
-
-
-    }
-
-    let maxcount = 0;
     let common = null;
-    let maxindex = 0;
+    let maxcount = 0;
 
-    for(let item = 0; item<count.length;item++){      // loops through count and checks which one is the highest value
-        if(count[item] > maxcount){
-            alert("new max found:"+ count[item]);
-            maxcount = count[item];
-            maxindex = count.indexof(maxcount);
-            alert("max index is:"+ maxindex);
 
-            common = check[maxindex];
-            alert("most common is:"+ common);
 
+    for(let i = 0;i < list.length;i++){
+        let item = list[i];  // this grabs the name in the list
+
+        if(list[item] > maxcount){
+            maxcount = list[item];
+            common = item;
         }
+
+
     }
 
     return common;
@@ -91,11 +69,10 @@ function mostcommon(list){  //  this checks the most common element in a list
 
 function displaymarkerinfo(marker){
     document.getElementById("local").textContent = marker.customid;
-    document.getElementById("common-species").textContent = marker.data.species;
+    document.getElementById("common-species").textContent = mostcommon(marker.data.species);
     document.getElementById("highest-severity").textContent = marker.data.level;
     document.getElementById("reported-date").textContent = marker.data.dates;
     document.getElementById("reportcount").textContent = marker.data.count;
-
 
 }
 
@@ -120,7 +97,7 @@ async function createmarkers(location,date, species){
             marker.data.species[species] += 1;
         }
 
-        alert("marker species: "+ species + "count: " + marker.data.species[species]);
+        //alert("marker species: "+ species + "count: " + marker.data.species[species]);
 
         //marker.data.mostcommon = mostcommon(marker.data.species);
 
