@@ -190,7 +190,7 @@ async function grabdata(){
 
     }
     
-    alert("Total fetched: " + allData.length + " rows");
+    
     
     if (allData.length === 0) {
         alert("No data found!");
@@ -199,7 +199,7 @@ async function grabdata(){
 
         //const testData = data.slice(0, 10);  //  limit for testing purposes
 
-        alert(allData.length + " records found.");
+        
        for (let i = 0; i < allData.length; i++) {
     
     try {
@@ -366,6 +366,7 @@ async function submitform(){
 
     const date = new Date(dateinput).toISOString();  // converts the date to ISO format for the database
     const genid = Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15); // this creates a 2 random ids of lengths between10 and 13 and adds them together to gets a long enough id
+    Event.preventDefault();
     alert(location + date+ species +genid );
  
     if(location === "" || date === "" || species === "")

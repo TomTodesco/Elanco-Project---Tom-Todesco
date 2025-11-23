@@ -125,7 +125,7 @@ display:block;
     margin-top: 10px;
     margin-left: 10px;
     position:relative;
-    top: 250px;
+    top: auto;
 }
 
 #identification-button{
