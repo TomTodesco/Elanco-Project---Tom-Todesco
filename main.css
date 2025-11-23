@@ -1,0 +1,160 @@
+.filter{
+    width: 100%;
+    height: auto;
+    background-color: #f2f2f2;
+    padding: 5px;
+}
+
+#species, #location, #date, #severity{
+    margin-right: 10px;
+    padding-right: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#map{
+    height: 500px;
+    width: 60%;
+}
+
+
+
+main {
+    width: 100%;
+    display: flex;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.statistics{
+    width: 60%;
+    height: auto;
+    background-color: #e6e6e6;
+    position: relative;
+    top: -255px;
+}
+.stats-content{
+    display: flex;
+    padding-right: 3px;
+    margin-left: 7px;
+}
+
+#local, #common-species, #highest-severity, #reported-date, #count{
+    font-weight: bold;
+}
+
+#l_local, #l_common, #l_severity, #l_date, #l_count{
+    margin-right: 15px;
+    padding-right: 10px;
+    border-radius: 5px;
+    
+}
+.page-container{
+background-color: #d9d9d9;
+width:40%;
+height:735px;
+
+
+}
+
+.page{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: -20px;
+
+}
+.page.hidden{
+    display: none;
+}
+
+.info{
+    color: black;
+
+}
+
+.info.hidden{
+    display: none;
+
+}
+
+
+.form{
+display:block;
+
+}
+
+#location-input, #date-input, #species-input{
+    padding:5px;
+       
+
+
+}
+
+.report{
+    width: 60%;
+    height: auto;
+    background-color: #d9d9d9;
+    display: inline-block;
+    position: relative;
+    top: -255px;
+}
+   
+.report-content{
+    margin-right: 7px;
+    display: flex;
+}
+
+#report-button{
+    height: 30px;
+    margin-left: 20px;
+    color: white;
+    background-color: red;
+    border-radius: 100px;
+    cursor: pointer;
+    position: relative;
+    top: 10px;
+}
+
+.switch-buttons{
+    margin-top: 10px;
+    margin-left: 10px;
+    position:relative;
+    top: 250px;
+}
+
+#identification-button{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#identification-button, #prevention-button{
+    height: 40px;
+    margin-right: 20px;
+    color: white;
+    background-color: blue;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+#identification-button:hover, #prevention-button:hover{
+    background-color: darkblue;
+}
+
+
+
+#back-button, #submit-button{
+    height: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+    color: black;
+    background-color: red;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
