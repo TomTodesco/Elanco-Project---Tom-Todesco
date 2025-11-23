@@ -15,30 +15,42 @@
         <h2>Filter</h2>
         <div class="options">
             <label for="species">Species:</label>
-            <select id="species">
+            <select id="species" onchange="filterspecies()">
                 <option value="all">All Species</option>
-                <option value="foxbadger">Fox/Badger Tick</option>
-                <option value="marsh">Marsh Tick</option>
-                <option value="passerine">Passerine Tick</option>
-                <option value = "southernrodent">Southern Rodent Tick</option>
-                <option value = "treehole">Tree-Hole Tick</option>
+                <option value="Fox/badger tick">Fox/Badger Tick</option>
+                <option value="Marsh tick">Marsh Tick</option>
+                <option value="Passerine tick">Passerine Tick</option>
+                <option value = "Southern rodent tick">Southern Rodent Tick</option>
+                <option value = "Tree-hole tick">Tree-Hole Tick</option>
             </select>
             <label for="location">Location:</label>
-            <select id="location">
+            <select id="location" onchange= "filterlocation()">
                 <option value="all">All Locations</option>
-                <option value="location1">Location 1</option>
-                <option value="location2">Location 2</option>
-                <option value="location3">Location 3</option>
+                <option value="Glasgow">Glasgow</option>
+                <option value="Edinburgh">Edinburgh</option>
+                <option value="Newcastle">Newcastle</option>
+                <option value="Manchester">manchester</option>
+                <option value="Liverpool">Liverpool</option>
+                <option value= "Sheffield">Sheffield</option>
+                <option value="Leeds">Leeds</option>
+                <option value="Nottingham">Nottingham</option>
+                <option value="Birmingham">Birmingham</option>
+                <option value="London">London</option>
+                <option value="Cardiff">Cardiff</option>
+                <option value= "Leicester">Leicester</option>
+                <option value= "Bristol">Bristol</option>
+                <option value="Southampton">Southampton</option>
             </select>
             <label for="date">Date:</label>
-            <select id="date">
+            <select id="date" onchange = "filterdate()">
                 <option value="alltime">All Time</option>
                 <option value="pastweek">Past Week</option>
                 <option value="pastmonth">Past Month</option>
                 <option value="pastyear">Past Year</option>
+                <option value="past5years">Past 5 Years</option>
             </select>
             <label for="severity">Severity:</label>
-            <select id="severity">
+            <select id="severity" onchange="filterlevel()">
                 <option value="all">All Severities</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>

@@ -6,6 +6,15 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
 const markers = new Map();
 let map  // needs to be global to be accessed in multiple functions
 
+
+const layermarkers = {
+    low: L.layerGroup(),
+    medium: L.layerGroup(),
+    high: L.layerGroup()    
+
+}
+
+
 function initializeMap() {
 map = L.map('map').setView([51.505, -0.09], 10);
 
@@ -13,6 +22,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap'
 }).addTo(map);
 
+layermarkers.low.addTo(map);
+layermarkers.medium.addTo(map);
+layermarkers.high.addTo(map);
 
 return map;
 }
@@ -42,12 +54,8 @@ async function geocodecity(location) {
 }
 
 function mostcommon(list){  //  this checks the most common element in a list
-    let count = {};
-    let check = {};
     let common = null;
     let maxcount = 0;
-
-
 
     for(let i = 0;i < list.length;i++){
         let item = list[i];  // this grabs the name in the list
@@ -56,10 +64,7 @@ function mostcommon(list){  //  this checks the most common element in a list
             maxcount = list[item];
             common = item;
         }
-
-
     }
-
     return common;
 
 
@@ -79,6 +84,7 @@ function displaymarkerinfo(marker){
 async function createmarkers(location,date, species){
     if(markers.has(location)){
         const marker = markers.get(location);
+        let oldlevel = marker.data.level;
         marker.data.count += 1;
         if(marker.data.count > 50 && marker.data.count <=70){
             marker.data.level = "Medium";
@@ -97,9 +103,14 @@ async function createmarkers(location,date, species){
             marker.data.species[species] += 1;
         }
 
+        if(oldlevel !== marker.data.level){
+            layermarkers[oldlevel.toLowerCase()].removeLayer(marker);
+            layermarkers[marker.data.level.toLowerCase()].addLayer(marker);
+        }
+
         //alert("marker species: "+ species + "count: " + marker.data.species[species]);
 
-        //marker.data.mostcommon = mostcommon(marker.data.species);
+        
 
         marker.bindPopup(location + "<br>" + "Risk level:" + marker.data.level + "<br>" + "Number of reports: " + marker.data.count );
         return marker;
@@ -116,20 +127,22 @@ async function createmarkers(location,date, species){
 
         const {lat,lan} = coords;
 
-       const marker = L.marker([lat, lan]).addTo(map);
+       const marker = L.marker([lat, lan]);
         marker.customid = location;
         marker.data = {
             count: 1,
             level: "Low",
             dates: date,
             species: [species]
-            //mostcommon: species
+            
         } 
         marker.data.species[species] = 1;
         marker.bindPopup(location + "<br>" + "Risk level:" + marker.data.level + "<br>" + "Number of reports: " + marker.data.count );
         marker.on('click', function(){
             displaymarkerinfo(marker);
         });
+
+        marker.addTo(layermarkers.low);
 
         markers.set(location, marker);
         return marker;
@@ -209,6 +222,140 @@ alert("loop complete!");
    
 
 }
+
+function filterlevel(){
+    const level = document.getElementById("severity").value;
+
+    if(level === "all"){
+        layermarkers.low.addTo(map);
+        layermarkers.medium.addTo(map);
+        layermarkers.high.addTo(map);
+    }
+    else if(level === "low"){
+        layermarkers.low.addTo(map);
+        map.removeLayer(layermarkers.medium);
+        map.removeLayer(layermarkers.high);
+    }
+    else if(level === "medium"){
+        layermarkers.medium.addTo(map);
+        map.removeLayer(layermarkers.low);
+        map.removeLayer(layermarkers.high);
+    }
+    else if(level === "high"){
+        layermarkers.high.addTo(map);
+        map.removeLayer(layermarkers.low);
+        map.removeLayer(layermarkers.medium);
+    }
+
+}
+
+function filterlocation(){
+
+    const selectedlocation = document.getElementById("location").value;
+    markers.forEach((marker) => {
+        marker.remove();
+    });
+
+    if(selectedlocation === "all"){
+        markers.forEach((marker) => {
+            marker.addTo(layermarkers[marker.data.level.toLowerCase()]);   
+        });
+    }
+    else{
+        
+
+        marker = markers.get(selectedlocation);
+        if(marker){
+            marker.addTo(layermarkers[marker.data.level.toLowerCase()]);
+        }
+        
+
+
+       /* markers.forEach((marker,loc) => {
+            if(selectedlocation === loc){
+                alert("id matched" + loc);
+                marker.addTo(layermarkers[marker.data.level.toLowerCase()]);
+            }
+        });*/
+    }
+
+}
+
+function filterspecies(){
+
+    const selectedspecies = document.getElementById("species").value;
+    markers.forEach((marker) => {
+        marker.remove();
+    });
+
+    if(selectedspecies === "all"){
+        markers.forEach((marker) => {
+            marker.addTo(layermarkers[marker.data.level.toLowerCase()]);   
+        });
+    }
+    else{
+        markers.forEach((marker, loc) => {
+            let common = mostcommon(marker.data.species);
+            if(selectedspecies === common){
+                marker.addTo(layermarkers[marker.data.level.toLowerCase()]);
+            }
+        });
+    }
+
+
+}
+
+
+function filterdate(){
+    alert("date filter");
+    const selecteddate = document.getElementById("date").value;
+
+    const now = new Date();
+    let cutoffdate;
+    alert("starting converting");
+    if(selecteddate === "alltime"){
+        cutoffdate = null;
+    }
+    else if(selecteddate === "pastweek"){
+        cutoffdate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+    }
+    else if(selecteddate === "pastmonth"){
+        cutoffdate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); // 30 days ago
+    }
+    else if(selecteddate === "pastyear"){
+        cutoffdate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000); // 1 year ago
+    }
+    else if(selecteddate === "past5years"){
+        cutoffdate = new Date(now.getTime() - 5 * 365 * 24 * 60 * 60 * 1000); // 5 years ago
+    }
+    alert("converting done");
+
+    markers.forEach((marker) => {
+        marker.remove();
+    });
+        alert("markers removed");
+    if(cutoffdate === null){
+        alert("cutoff date is null");
+        markers.forEach((marker) => {
+            marker.addTo(layermarkers[marker.data.level.toLowerCase()]);   
+        });
+    }
+    else{
+        alert("other condition");
+        markers.forEach((marker, loc) => {
+            const markerdate = new Date(marker.data.dates);
+            
+            if(markerdate >= cutoffdate){
+                marker.addTo(layermarkers[marker.data.level.toLowerCase()]);
+            }
+        });
+    }
+
+
+}
+
+
+
 
 
 async function submitform(){
