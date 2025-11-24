@@ -107,7 +107,9 @@ display:block;
    
 .report-content{
     margin-right: 7px;
-    display: flex;
+    /*display: flex;*/
+    position: relavtive;
+    top: -100px
 }
 
 #report-button{
@@ -118,7 +120,8 @@ display:block;
     border-radius: 100px;
     cursor: pointer;
     position: relative;
-    top: 10px;
+    top: -40px;
+    left: 130px;
 }
 
 .switch-buttons{

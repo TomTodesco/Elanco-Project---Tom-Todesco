@@ -363,17 +363,16 @@ async function submitform(){
     location = location.charAt(0).toUpperCase() + location.slice(1);  //makes the location have a capital letter
     const dateinput = document.getElementById("date-input").value;
     const species = document.getElementById("species-input").value;
-
-    const date = new Date(dateinput).toISOString();  // converts the date to ISO format for the database
     const genid = Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15); // this creates a 2 random ids of lengths between10 and 13 and adds them together to gets a long enough id
-    Event.preventDefault();
-    alert(location + date+ species +genid );
+
  
-    if(location === "" || date === "" || species === "")
+    if(location === "" || dateinput === "" || species === "")
     {
-        alert("Please can you fill in all the boxes")
+        alert("please can you fill in all the boxes");
     }
     else{
+        const date = new Date(dateinput).toISOString();  // converts the date to ISO format for the database
+
         const {data, error} = await supabase
         .from("tick_data")
         .insert([{

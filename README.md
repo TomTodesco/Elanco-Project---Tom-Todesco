@@ -1,2 +1,7 @@
 # Elanco-Project---Tom-Todesco
-This is a frontend project that brings tick sighting data to life
+Project Outlines:
+1. This project is a front end project designed to help 
+
+
+
+
