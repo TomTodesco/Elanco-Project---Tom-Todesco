@@ -66,7 +66,7 @@
                     <h2> Information</h2>
                     <div class = "information-content">
                         <button id = "fox/badger-button" onclick = "switchtofoxbadger()">Fox/Badger Tick</button>
-                        <button id = "marsh-button" onclick = "switchtomarsh()">March Tick</button>
+                        <button id = "marsh-button" onclick = "switchtomarsh()">Marsh Tick</button>
                         <button id = "passerine-button" onclick = "switchtopasserine()">Passerine Tick</button>
                         <button id = "southernrodent-button" onclick = "switchtosouthern()">Southern Rodent Tick</button>
                         <button id = "tree-hole-button" onclick = "switchtotreehole()">Tree-Hole Tick</button>
@@ -199,7 +199,23 @@
                 <p> Here you can report a tick sighting in your area whether it's just one or multiple, don't be afraid to report</p>
 
                 <label for "location-input">Location:</label><br>
-                <input type = "text" id = "location-input" name = "location-input"><br>
+                <select id = "location-input" name = "location-input">
+                    <option value = ""></option>
+                    <option value="Glasgow">Glasgow</option>
+                    <option value="Edinburgh">Edinburgh</option>
+                    <option value="Newcastle">Newcastle</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="Liverpool">Liverpool</option>
+                    <option value= "Sheffield">Sheffield</option>
+                    <option value="Leeds">Leeds</option>
+                    <option value="Nottingham">Nottingham</option>
+                    <option value="Birmingham">Birmingham</option>
+                    <option value="London">London</option>
+                    <option value="Cardiff">Cardiff</option>
+                    <option value= "Leicester">Leicester</option>
+                    <option value= "Bristol">Bristol</option>
+                    <option value="Southampton">Southampton</option>
+                </select><br>
                 <label for "date-input">Date and Time:</label><br>
                 <input type = "datetime-local" id = "date-input" name = "date-input"><br>
                 <label for "species-input">Species:</label><br>

@@ -100,6 +100,10 @@ This application allows users to visualise tick sightings across the Uk and disp
 <li>And run it on your local device</li>
 </ul>
 
+# Video Walk Through
+
+<a src = "https://www.loom.com/share/3e4475d448e246a3801d50a18759dcbc">https://www.loom.com/share/3e4475d448e246a3801d50a18759dcbc</a>
+
 
 
 
