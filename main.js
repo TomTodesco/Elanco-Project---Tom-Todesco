@@ -86,10 +86,10 @@ async function createmarkers(location,date, species){
         const marker = markers.get(location);
         let oldlevel = marker.data.level;
         marker.data.count += 1;
-        if(marker.data.count > 50 && marker.data.count <=70){
+        if(marker.data.count > 65 && marker.data.count <=80){
             marker.data.level = "Medium";
         }
-        else if(marker.data.count > 70){
+        else if(marker.data.count > 80){
             marker.data.level = "High";
         }
         if(marker.data.dates < date){
@@ -218,7 +218,7 @@ async function grabdata(){
     }
 }
 
-alert("loop complete!");
+
    
 
 }
@@ -307,12 +307,10 @@ function filterspecies(){
 
 
 function filterdate(){
-    alert("date filter");
     const selecteddate = document.getElementById("date").value;
 
     const now = new Date();
     let cutoffdate;
-    alert("starting converting");
     if(selecteddate === "alltime"){
         cutoffdate = null;
     }
@@ -328,20 +326,17 @@ function filterdate(){
     else if(selecteddate === "past5years"){
         cutoffdate = new Date(now.getTime() - 5 * 365 * 24 * 60 * 60 * 1000); // 5 years ago
     }
-    alert("converting done");
+    
 
     markers.forEach((marker) => {
         marker.remove();
     });
-        alert("markers removed");
     if(cutoffdate === null){
-        alert("cutoff date is null");
         markers.forEach((marker) => {
             marker.addTo(layermarkers[marker.data.level.toLowerCase()]);   
         });
     }
     else{
-        alert("other condition");
         markers.forEach((marker, loc) => {
             const markerdate = new Date(marker.data.dates);
             
